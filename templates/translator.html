@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <form action="{% url 'translator_view' %}" method="post">  <!--translator_view je ime kreirano u urls.py-->
+        {% csrf_token %}  <!--Ovo obavezno staviti kad imamo forme, da bi nam dugme radilo-->
+        <div class="row">  <!--Jedan veliki div koji ima u sebi dva input polja i button-->
+            <div class="col-sm-6 mt-3 left">  <!--Ovo je prva kolona diva iznad-->
+                <textarea class="form-control" rows="3" name="my_textarea">{{original_text}}</textarea>  <!--Stavio sam original_text, jer mi je to varijabla u views.py, kojoj sam kao vrednost stavio original_text-->
+            </div>
+            <div class="col-sm-6 mt-3 left">  <!--Ovo je druga kolona diva iznad-->
+                <textarea class="form-control" rows="3">{{output_text}}</textarea>  <!--rows=3 znaci da ima visinu jednaku tri reda. Prosledim mu "output_text", jer sam to definisao u views.py, gde sam stavio to kao key, a vrednost mu je varijabla sa promenjenim tekstom-->
+                <input class="btn btn-primary ml-3 mt-3" type="submit" value="Submit">  <!--type je submit jer saljemo podatke(formu)-->
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+<!--Kad pritisnem dugbe "Submit" upucujemo se na link(URL) translator_view. Metoda je "POST", jer korisnik salje neke podatke i ocekuje ih nazad-->

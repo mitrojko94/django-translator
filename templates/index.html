@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!--Ovo sam sve nasao u Bootstrap-u. Nadjemo sta hocu, tipa kao ovde card i pratim kodove kako su tamo napisani i ovde samo prepravim!-->
+    <div class="container">  <!--Kad sam stavio class="container", ova klasa postoji vec u JS kodu i zato ga pomera blize sredini-->
+        {% for post in post_list %}  <!--post je proizvoljna varijabla, a post_list mora da se gadja sa imenom klase u views.py. Tipa ako je klasa PostList, ovde ide post_list-->
+            <div class="card m-3">
+                <div class="card-body">
+                    <!--Za filtere koristim Django templates filder. Ima dokumentacija i pomocu ctrl+F nadjem sta hocu-->
+                    <h2 class="card-title">{{post.title}}</h2>
+                    <p class="card-text">{{post.content | slice:"500"}}</p>  <!--Dodavanjem | pravim templates filders. Ovo slice:"500", znaci da ce biti prikazano 500 karaktera-->
+                    <p class="card-text">
+                        Author: {{post.author | title}}  <!--Filter title vraca prvo slovo veliko!-->
+                    </p> 
+                    <a class="btn btn-primary" href="{% url 'blog_view' post.slug %}">Read More</a>  <!--Koristim url i prosledim joj name iz urls.py. A name je blog_view, jer sam tako definisao url za nase postove. I obavezno kao drugi parametar stavim post.slug(post se menja, to zavisi od varijable definisane u for loop)-->
+                </div> 
+            </div> 
+        {% endfor %}
+    </div>
+{% endblock %}
